@@ -87,14 +87,6 @@
             margin: 0 auto;
         }
         
-        /* 
-           Angles based on sketch mapping (starting top-right, clockwise):
-           About: ~ -54deg
-           Skills: ~ 18deg
-           Projects: ~ 90deg (bottom center)
-           Experience: ~ 162deg
-           Education: ~ 234deg
-        */
         .nav-item {
             position: absolute;
             top: 50%;
@@ -188,6 +180,28 @@
 </head>
 <body class="min-h-screen flex flex-col pt-24 pb-10 px-4 sm:px-12">
 
+    <!-- F1 Test Track Background (Grey Road) -->
+    <!-- Positioned to completely hug the outer frame, avoiding buttons in the middle -->
+    <div id="f1-track" class="fixed top-[96px] bottom-[32px] left-[32px] right-[32px] z-0 pointer-events-none flex items-center justify-center opacity-90 transition-opacity duration-300">
+        <svg class="w-full h-full max-w-7xl mx-auto drop-shadow-lg" viewBox="0 0 1000 600" fill="none" preserveAspectRatio="none">
+            
+            <!-- Track Outer Borders (Dark Grey) -->
+            <path d="M 500 570 L 100 570 Q 30 570 30 500 L 30 100 Q 30 30 100 30 L 900 30 Q 970 30 970 100 L 970 200 Q 970 250 910 250 L 830 250 Q 770 250 770 300 Q 770 350 830 350 L 910 350 Q 970 350 970 400 L 970 500 Q 970 570 900 570 Z" 
+                  stroke="#334155" stroke-width="64" stroke-linejoin="round" stroke-linecap="round" />
+                  
+            <!-- Base Asphalt (Grey Road) -->
+            <path d="M 500 570 L 100 570 Q 30 570 30 500 L 30 100 Q 30 30 100 30 L 900 30 Q 970 30 970 100 L 970 200 Q 970 250 910 250 L 830 250 Q 770 250 770 300 Q 770 350 830 350 L 910 350 Q 970 350 970 400 L 970 500 Q 970 570 900 570 Z" 
+                  stroke="#64748b" stroke-width="56" stroke-linejoin="round" stroke-linecap="round" />
+            
+            <!-- Center Dashed Line (Racing Line) -->
+            <path d="M 500 570 L 100 570 Q 30 570 30 500 L 30 100 Q 30 30 100 30 L 900 30 Q 970 30 970 100 L 970 200 Q 970 250 910 250 L 830 250 Q 770 250 770 300 Q 770 350 830 350 L 910 350 Q 970 350 970 400 L 970 500 Q 970 570 900 570 Z" 
+                  stroke="#f1f5f9" stroke-width="4" stroke-dasharray="14 20" stroke-linejoin="round" stroke-linecap="round" />
+
+            <!-- Start/Finish Line (Green block) -->
+            <line x1="500" y1="538" x2="500" y2="602" stroke="#22c55e" stroke-width="14" />
+        </svg>
+    </div>
+
     <!-- Engineering Drawing Borders -->
     <div class="frame">
         <div class="frame-inner-line"></div>
@@ -214,33 +228,33 @@
                 <!-- Center Gear SVG -->
                 <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <svg id="gear-svg" class="w-40 h-40 sm:w-56 sm:h-56 text-draft-ink opacity-80" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <!-- 8-Tooth Gear Outline -->
-    <path d="M 44 4 L 56 4 L 58 14 A 37 37 0 0 1 69.8 18.9 L 78.3 13.2 L 86.8 21.7 L 81.1 30.2 A 37 37 0 0 1 86 42 L 96 44 L 96 56 L 86 58 A 37 37 0 0 1 81.1 69.8 L 86.8 78.3 L 78.3 86.8 L 69.8 81.1 A 37 37 0 0 1 58 86 L 56 96 L 44 96 L 42 86 A 37 37 0 0 1 30.2 81.1 L 21.7 86.8 L 13.2 78.3 L 18.9 69.8 A 37 37 0 0 1 14 58 L 4 56 L 4 44 L 14 42 A 37 37 0 0 1 18.9 30.2 L 13.2 21.7 L 21.7 13.2 L 30.2 18.9 A 37 37 0 0 1 42 14 Z" />
-    
-    <!-- Dashed Blueprint Ring -->
-    <circle cx="50" cy="50" r="28" stroke-dasharray="2 4" stroke-width="2" />
-    
-    <!-- Inner Hub -->
-    <circle cx="50" cy="50" r="14" stroke-width="2" />
-    <circle cx="50" cy="50" r="7" stroke-width="1.5" />
-    <circle cx="50" cy="50" r="3" fill="currentColor" />
-    
-    <!-- Spokes connecting Hub to Dashed Ring -->
-    <line x1="50" y1="14" x2="50" y2="34" />
-    <line x1="50" y1="66" x2="50" y2="86" />
-    <line x1="14" y1="50" x2="34" y2="50" />
-    <line x1="66" y1="50" x2="86" y2="50" />
-    <line x1="39.8" y1="39.8" x2="25.4" y2="25.4" />
-    <line x1="60.2" y1="60.2" x2="74.6" y2="74.6" />
-    <line x1="39.8" y1="60.2" x2="25.4" y2="74.6" />
-    <line x1="60.2" y1="39.8" x2="74.6" y2="25.4" />
+                        <!-- 8-Tooth Gear Outline -->
+                        <path d="M 44 4 L 56 4 L 58 14 A 37 37 0 0 1 69.8 18.9 L 78.3 13.2 L 86.8 21.7 L 81.1 30.2 A 37 37 0 0 1 86 42 L 96 44 L 96 56 L 86 58 A 37 37 0 0 1 81.1 69.8 L 86.8 78.3 L 78.3 86.8 L 69.8 81.1 A 37 37 0 0 1 58 86 L 56 96 L 44 96 L 42 86 A 37 37 0 0 1 30.2 81.1 L 21.7 86.8 L 13.2 78.3 L 18.9 69.8 A 37 37 0 0 1 14 58 L 4 56 L 4 44 L 14 42 A 37 37 0 0 1 18.9 30.2 L 13.2 21.7 L 21.7 13.2 L 30.2 18.9 A 37 37 0 0 1 42 14 Z" />
+                        
+                        <!-- Dashed Blueprint Ring -->
+                        <circle cx="50" cy="50" r="28" stroke-dasharray="2 4" stroke-width="2" />
+                        
+                        <!-- Inner Hub -->
+                        <circle cx="50" cy="50" r="14" stroke-width="2" />
+                        <circle cx="50" cy="50" r="7" stroke-width="1.5" />
+                        <circle cx="50" cy="50" r="3" fill="currentColor" />
+                        
+                        <!-- Spokes connecting Hub to Dashed Ring -->
+                        <line x1="50" y1="14" x2="50" y2="34" />
+                        <line x1="50" y1="66" x2="50" y2="86" />
+                        <line x1="14" y1="50" x2="34" y2="50" />
+                        <line x1="66" y1="50" x2="86" y2="50" />
+                        <line x1="39.8" y1="39.8" x2="25.4" y2="25.4" />
+                        <line x1="60.2" y1="60.2" x2="74.6" y2="74.6" />
+                        <line x1="39.8" y1="60.2" x2="25.4" y2="74.6" />
+                        <line x1="60.2" y1="39.8" x2="74.6" y2="25.4" />
 
-    <!-- Diagonal Blueprint Crosshairs (Outside) -->
-    <line x1="22" y1="22" x2="16" y2="16" stroke-width="1" stroke-dasharray="1 2" />
-    <line x1="78" y1="78" x2="84" y2="84" stroke-width="1" stroke-dasharray="1 2" />
-    <line x1="22" y1="78" x2="16" y2="84" stroke-width="1" stroke-dasharray="1 2" />
-    <line x1="78" y1="22" x2="84" y2="16" stroke-width="1" stroke-dasharray="1 2" />
-</svg>
+                        <!-- Diagonal Blueprint Crosshairs (Outside) -->
+                        <line x1="22" y1="22" x2="16" y2="16" stroke-width="1" stroke-dasharray="1 2" />
+                        <line x1="78" y1="78" x2="84" y2="84" stroke-width="1" stroke-dasharray="1 2" />
+                        <line x1="22" y1="78" x2="16" y2="84" stroke-width="1" stroke-dasharray="1 2" />
+                        <line x1="78" y1="22" x2="84" y2="16" stroke-width="1" stroke-dasharray="1 2" />
+                    </svg>
                 </div>
 
                 <!-- Navigation Links around the Gear -->
@@ -262,15 +276,10 @@
                 </div>
             </div>
             
-            <div class="mt-20 sm:mt-24 text-center z-20">
-                <p class="text-xs sm:text-sm font-bold border border-draft-ink inline-block px-4 py-2 bg-draft-bg shadow-[2px_2px_0px_#1e293b]">
-                    <i class="fas fa-mouse-pointer mr-2"></i>SELECT A MODULE TO INSPECT
-                </p>
-            </div>
         </div>
 
         <!-- ==================== ABOUT VIEW ==================== -->
-        <div id="view-about" class="view w-full max-w-4xl flex-col">
+        <div id="view-about" class="view w-full max-w-4xl flex-col z-20">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end border-b-2 border-draft-ink pb-2 mb-6 gap-2">
                 <h2 class="text-xl sm:text-2xl font-bold uppercase"><i class="fas fa-user-tie mr-3"></i>Module: About Me</h2>
                 <span class="text-xs uppercase font-bold px-2 border border-draft-ink">ID: SEC-01</span>
@@ -279,7 +288,7 @@
             <div class="spec-sheet mb-8 flex flex-col md:flex-row gap-8 items-start">
                 <div class="w-full md:w-1/3 flex justify-center">
                     <div class="p-2 border-2 border-draft-ink bg-white shadow-[4px_4px_0px_#1e293b] transform -rotate-2">
-                        <img src="dharsyan profile.jpeg" alt="Dharsyan Rao" class="w-full max-w-[200px] h-auto object-cover  hover:-0 transition-all duration-300">
+                        <img src="dharsyan profile.jpeg" alt="Dharsyan Rao" class="w-full max-w-[200px] h-auto object-cover hover:-0 transition-all duration-300">
                     </div>
                 </div>
                 <div class="w-full md:w-2/3">
@@ -309,7 +318,7 @@
         </div>
 
         <!-- ==================== EDUCATION VIEW ==================== -->
-        <div id="view-education" class="view w-full max-w-3xl flex-col">
+        <div id="view-education" class="view w-full max-w-3xl flex-col z-20">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end border-b-2 border-draft-ink pb-2 mb-6 gap-2">
                 <h2 class="text-xl sm:text-2xl font-bold uppercase"><i class="fas fa-graduation-cap mr-3"></i>Module: Education</h2>
                 <span class="text-xs uppercase font-bold px-2 border border-draft-ink">ID: SEC-02</span>
@@ -332,7 +341,7 @@
         </div>
 
         <!-- ==================== EXPERIENCE VIEW ==================== -->
-        <div id="view-experience" class="view w-full max-w-4xl flex-col">
+        <div id="view-experience" class="view w-full max-w-4xl flex-col z-20">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end border-b-2 border-draft-ink pb-2 mb-6 gap-2">
                 <h2 class="text-xl sm:text-2xl font-bold uppercase"><i class="fas fa-briefcase mr-3"></i>Module: Experience</h2>
                 <span class="text-xs uppercase font-bold px-2 border border-draft-ink">ID: SEC-03</span>
@@ -373,7 +382,7 @@
         </div>
 
         <!-- ==================== SKILLS VIEW ==================== -->
-        <div id="view-skills" class="view w-full max-w-4xl flex-col">
+        <div id="view-skills" class="view w-full max-w-4xl flex-col z-20">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end border-b-2 border-draft-ink pb-2 mb-6 gap-2">
                 <h2 class="text-xl sm:text-2xl font-bold uppercase"><i class="fas fa-tools mr-3"></i>Module: Technical Skills</h2>
                 <span class="text-xs uppercase font-bold px-2 border border-draft-ink">ID: SEC-04</span>
@@ -447,7 +456,7 @@
         </div>
 
         <!-- ==================== PROJECTS VIEW ==================== -->
-        <div id="view-projects" class="view w-full max-w-5xl flex-col">
+        <div id="view-projects" class="view w-full max-w-5xl flex-col z-20">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end border-b-2 border-draft-ink pb-2 mb-6 gap-2">
                 <h2 class="text-xl sm:text-2xl font-bold uppercase"><i class="fas fa-project-diagram mr-3"></i>Module: Projects</h2>
                 <span class="text-xs uppercase font-bold px-2 border border-draft-ink">ID: SEC-05</span>
@@ -506,74 +515,147 @@
 
     </main>
 
+    <!-- Mobile Rover Simulation -->
+    <div id="ros-rover" class="fixed z-30 pointer-events-none flex flex-col items-center justify-center" style="width: 50px; height: 50px; transition: opacity 0.3s;">
+        <svg viewBox="0 0 100 100" fill="none" stroke="#1e293b" stroke-width="4" stroke-linejoin="round" class="w-full h-full drop-shadow-md">
+            <rect x="20" y="25" width="60" height="50" rx="4" fill="#f4f4ec" />
+            <rect x="8" y="15" width="24" height="14" rx="2" fill="#1e293b" />
+            <rect x="8" y="71" width="24" height="14" rx="2" fill="#1e293b" />
+            <rect x="68" y="15" width="24" height="14" rx="2" fill="#1e293b" />
+            <rect x="68" y="71" width="24" height="14" rx="2" fill="#1e293b" />
+            <path d="M 80 40 L 96 50 L 80 60 Z" fill="#2563eb" stroke="none" />
+            <circle cx="50" cy="50" r="10" />
+            <circle cx="50" cy="50" r="4" fill="#1e293b" />
+        </svg>
+    </div>
+
+    <!-- HUD Controls (Left) -->
+    <div id="rover-hud" class="fixed bottom-6 left-6 z-50 border-2 border-draft-ink bg-draft-bg px-3 py-2 text-xs font-bold shadow-[4px_4px_0px_#1e293b] transition-opacity duration-300">
+        <i class="fas fa-gamepad mr-2"></i> MANUAL OVERRIDE: USE <span class="text-draft-accent">W A S D</span> TO DRIVE
+    </div>
+
+    <!-- Instruction HUD (Bottom Right) -->
+    <div id="instruction-hud" class="fixed bottom-6 right-6 z-50 border-2 border-draft-ink bg-draft-bg px-3 py-2 text-xs font-bold shadow-[4px_4px_0px_#1e293b] transition-opacity duration-300">
+        <i class="fas fa-mouse-pointer mr-2"></i>SELECT A MODULE TO INSPECT
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Set current date in header
             const dateObj = new Date();
             const dateStr = dateObj.getFullYear() + '-' + String(dateObj.getMonth() + 1).padStart(2, '0') + '-' + String(dateObj.getDate()).padStart(2, '0');
             document.getElementById('current-date').textContent = dateStr;
 
-            // DOM Elements
             const views = document.querySelectorAll('.view');
             const navLinks = document.querySelectorAll('.nav-link');
             const backBtns = document.querySelectorAll('.back-btn');
             const gear = document.getElementById('gear-svg');
-            
             let rotationAngle = 0;
 
-            // Function to handle view switching
             function showView(targetId) {
-                // Fade out current active views
+                // Game UI Elements
+                const track = document.getElementById('f1-track');
+                const rover = document.getElementById('ros-rover');
+                const hudLeft = document.getElementById('rover-hud');
+                const hudRight = document.getElementById('instruction-hud');
+
+                // Toggle visibility based on whether we are on the home screen
+                if (targetId === 'view-home') {
+                    if (track) track.style.opacity = '0.9';
+                    if (rover) rover.style.opacity = '1';
+                    if (hudLeft) { hudLeft.style.opacity = '1'; hudLeft.style.pointerEvents = 'auto'; }
+                    if (hudRight) { hudRight.style.opacity = '1'; hudRight.style.pointerEvents = 'auto'; }
+                } else {
+                    if (track) track.style.opacity = '0';
+                    if (rover) rover.style.opacity = '0';
+                    if (hudLeft) { hudLeft.style.opacity = '0'; hudLeft.style.pointerEvents = 'none'; }
+                    if (hudRight) { hudRight.style.opacity = '0'; hudRight.style.pointerEvents = 'none'; }
+                }
+
                 views.forEach(view => {
                     if (view.classList.contains('active')) {
                         view.style.opacity = '0';
                         view.style.transform = 'translateY(10px)';
-                        
                         setTimeout(() => {
                             view.classList.remove('active');
-                            // Prepare target view
                             const target = document.getElementById(targetId);
                             target.classList.add('active');
-                            // Small timeout to allow display:flex to apply before animating opacity
                             setTimeout(() => {
                                 target.style.opacity = '1';
                                 target.style.transform = 'translateY(0)';
                             }, 50);
-                        }, 400); // Matches CSS transition duration
+                        }, 400); 
                     }
                 });
             }
 
-            // Gear Interaction and Navigation
             navLinks.forEach(link => {
                 link.addEventListener('mouseenter', () => {
                     rotationAngle += 45;
                     gear.style.transform = `rotate(${rotationAngle}deg)`;
                 });
-
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
-                    // Extra spin on click
                     rotationAngle += 180;
                     gear.style.transform = `rotate(${rotationAngle}deg) scale(0.9)`;
-                    setTimeout(() => {
-                        gear.style.transform = `rotate(${rotationAngle}deg) scale(1)`;
-                    }, 300);
-
-                    const target = link.getAttribute('data-target');
-                    showView(target);
+                    setTimeout(() => { gear.style.transform = `rotate(${rotationAngle}deg) scale(1)`; }, 300);
+                    showView(link.getAttribute('data-target'));
                 });
             });
 
-            // Back button functionality
             backBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     showView('view-home');
-                    // Reset gear rotation slightly for dynamic feel
                     rotationAngle -= 90;
                     gear.style.transform = `rotate(${rotationAngle}deg)`;
                 });
             });
+
+            // ==========================================
+            // ROVER SIMULATION ENGINE
+            // ==========================================
+            const roverEl = document.getElementById('ros-rover');
+            let keys = {};
+            
+            // Spawn perfectly on the starting grid at the bottom edge
+            let pos = { x: window.innerWidth / 2 - 40, y: window.innerHeight - 85 };
+            let roverRotation = 180; 
+            let speed = 0;
+            
+            const maxSpeed = 3.5; 
+            const acceleration = 0.2; 
+            const friction = 0.88; 
+            const turnSpeed = 3.5; 
+
+            window.addEventListener('keydown', (e) => { keys[e.key.toLowerCase()] = true; });
+            window.addEventListener('keyup', (e) => { keys[e.key.toLowerCase()] = false; });
+
+            function updateRover() {
+                if (keys['a'] || keys['arrowleft']) roverRotation -= turnSpeed;
+                if (keys['d'] || keys['arrowright']) roverRotation += turnSpeed;
+                if (keys['w'] || keys['arrowup']) speed += acceleration;
+                if (keys['s'] || keys['arrowdown']) speed -= acceleration;
+
+                speed *= friction;
+                if (speed > maxSpeed) speed = maxSpeed;
+                if (speed < -maxSpeed) speed = -maxSpeed;
+
+                const rad = roverRotation * Math.PI / 180;
+                pos.x += Math.cos(rad) * speed;
+                pos.y += Math.sin(rad) * speed;
+
+                const margin = 40;
+                if (pos.x < margin) pos.x = margin;
+                if (pos.x > window.innerWidth - margin) pos.x = window.innerWidth - margin;
+                if (pos.y < margin) pos.y = margin;
+                if (pos.y > window.innerHeight - margin) pos.y = window.innerHeight - margin;
+
+                roverEl.style.left = pos.x + 'px';
+                roverEl.style.top = pos.y + 'px';
+                roverEl.style.transform = `translate(-50%, -50%) rotate(${roverRotation}deg)`;
+
+                requestAnimationFrame(updateRover);
+            }
+            updateRover();
         });
     </script>
 </body>
