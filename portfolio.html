@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dharsyan Rao's Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        mono: ['Space Mono', 'monospace'],
+                    },
+                    colors: {
+                        draft: {
+                            bg: '#f4f4ec', // Off-white drafting paper
+                            grid: '#b0c4de', // Light steel blue grid
+                            ink: '#1e293b', // Slate 800 for ink
+                            accent: '#2563eb', // Blue 600
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f4f4ec;
+            background-image: 
+                linear-gradient(rgba(176, 196, 222, 0.4) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(176, 196, 222, 0.4) 1px, transparent 1px);
+            background-size: 24px 24px;
+            background-position: center top;
+            font-family: 'Space Mono', monospace;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+
+        /* Engineering Drawing Frame */
+        .frame {
+            position: fixed;
+            top: 16px; left: 16px; right: 16px; bottom: 16px;
+            border: 2px solid #1e293b;
+            pointer-events: none;
+            z-index: 50;
+        }
+        
+        .frame-inner-line {
+            position: absolute;
+            top: 4px; left: 4px; right: 4px; bottom: 4px;
+            border: 1px solid rgba(30, 41, 59, 0.3);
+        }
+
+        /* Title block line */
+        .title-line {
+            position: fixed;
+            top: 80px;
+            left: 16px;
+            right: 16px;
+            border-top: 2px solid #1e293b;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        /* SPA Transitions */
+        .view {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-out;
+            transform: translateY(10px);
+        }
+        .view.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Circular Layout Math */
+        .circle-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            aspect-ratio: 1;
+            margin: 0 auto;
+        }
+        
+        /* 
+           Angles based on sketch mapping (starting top-right, clockwise):
+           About: ~ -54deg
+           Skills: ~ 18deg
+           Projects: ~ 90deg (bottom center)
+           Experience: ~ 162deg
+           Education: ~ 234deg
+        */
+        .nav-item {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            /* Use CSS variables for radius to adapt to mobile */
+            --radius: 140px; 
+            transform: translate(-50%, -50%) rotate(var(--angle)) translate(var(--radius)) rotate(calc(-1 * var(--angle)));
+            z-index: 10;
+        }
+
+        @media (min-width: 768px) {
+            .nav-item {
+                --radius: 200px;
+            }
+        }
+
+        .nav-link {
+            display: inline-block;
+            background: #f4f4ec;
+            padding: 0.5rem 1rem;
+            border: 1px dashed #1e293b;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 2px 2px 0px rgba(30, 41, 59, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-link:hover {
+            background: #1e293b;
+            color: #f4f4ec;
+            border-style: solid;
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0px rgba(30, 41, 59, 0.4);
+        }
+
+        /* Gear Animation */
+        #gear-svg {
+            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        /* Content Panel Styles */
+        .spec-sheet {
+            background: rgba(244, 244, 236, 0.95);
+            backdrop-filter: blur(4px);
+            border: 2px solid #1e293b;
+            padding: 2rem;
+            box-shadow: 8px 8px 0px rgba(30, 41, 59, 0.1);
+            position: relative;
+        }
+        
+        .spec-sheet::before {
+            content: '';
+            position: absolute;
+            top: 4px; left: 4px; right: 4px; bottom: 4px;
+            border: 1px dashed rgba(30, 41, 59, 0.3);
+            pointer-events: none;
+        }
+
+        .blueprint-btn {
+            background: transparent;
+            border: 2px solid #1e293b;
+            color: #1e293b;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 0.5rem 1.5rem;
+            transition: all 0.2s;
+            cursor: pointer;
+            display: inline-flex;
+            items-center: center;
+            gap: 0.5rem;
+        }
+        
+        .blueprint-btn:hover {
+            background: #1e293b;
+            color: #f4f4ec;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col pt-24 pb-10 px-6 sm:px-12">
+
+    <!-- Engineering Drawing Borders -->
+    <div class="frame">
+        <div class="frame-inner-line"></div>
+    </div>
+    <div class="title-line hidden sm:block"></div>
+
+    <!-- Header Title (Fixed conceptually, but scrolls if needed) -->
+    <header class="fixed top-4 left-0 w-full z-40 px-8 sm:px-16 flex items-center h-16 pointer-events-none">
+        <h1 class="text-xl sm:text-3xl font-bold uppercase tracking-widest text-draft-ink bg-draft-bg px-2 border-x-2 border-draft-ink sm:border-none sm:bg-transparent inline-block">
+            Dharsyan Rao's Portfolio
+        </h1>
+        <div class="hidden sm:block ml-auto text-xs border border-draft-ink px-2 py-1 bg-draft-bg">
+            REV: 1.0 | DATE: <span id="current-date"></span>
+        </div>
+    </header>
+
+    <!-- MAIN APP CONTAINER -->
+    <main id="app-container" class="relative flex-grow flex flex-col items-center justify-center z-10 w-full max-w-5xl mx-auto mt-8 sm:mt-0">
+        
+        <!-- ==================== HOME VIEW ==================== -->
+        <div id="view-home" class="view active w-full flex-col items-center justify-center">
+            
+            <div class="circle-container mt-12 sm:mt-0">
+                <!-- Center Gear SVG -->
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <svg id="gear-svg" class="w-40 h-40 sm:w-56 sm:h-56 text-draft-ink opacity-80" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <!-- Outer Rim -->
+                        <circle cx="50" cy="50" r="35" stroke-dasharray="2 2"/>
+                        <!-- Inner Hub -->
+                        <circle cx="50" cy="50" r="15" stroke-width="2"/>
+                        <circle cx="50" cy="50" r="10" />
+                        <!-- Hub Center -->
+                        <circle cx="50" cy="50" r="3" fill="currentColor"/>
+                        <!-- Spokes -->
+                        <line x1="50" y1="20" x2="50" y2="35" />
+                        <line x1="50" y1="65" x2="50" y2="80" />
+                        <line x1="20" y1="50" x2="35" y2="50" />
+                        <line x1="65" y1="50" x2="80" y2="50" />
+                        <line x1="28.7" y1="28.7" x2="39.4" y2="39.4" />
+                        <line x1="71.3" y1="71.3" x2="60.6" y2="60.6" />
+                        <line x1="28.7" y1="71.3" x2="39.4" y2="60.6" />
+                        <line x1="71.3" y1="28.7" x2="60.6" y2="39.4" />
+                        
+                        <!-- Teeth Path (Wireframe style) -->
+                        <path d="M44,14 L46,6 L54,6 L56,14 L64,16 L70,10 L76,15 L72,22 L78,29 L86,26 L89,33 L82,38 L84,46 L92,48 L92,56 L84,58 L82,66 L89,71 L86,78 L78,75 L72,82 L76,89 L70,94 L64,88 L56,90 L54,98 L46,98 L44,90 L36,88 L30,94 L24,89 L28,82 L22,75 L14,78 L11,71 L18,66 L16,58 L8,56 L8,48 L16,46 L18,38 L11,33 L14,26 L22,29 L28,22 L24,15 L30,10 L36,16 Z" stroke-width="2" stroke-linejoin="round"/>
+                        <!-- Dimension Lines overlay -->
+                        <line x1="0" y1="50" x2="10" y2="50" stroke-width="0.5" stroke-dasharray="1 1"/>
+                        <line x1="90" y1="50" x2="100" y2="50" stroke-width="0.5" stroke-dasharray="1 1"/>
+                        <line x1="50" y1="0" x2="50" y2="10" stroke-width="0.5" stroke-dasharray="1 1"/>
+                        <line x1="50" y1="90" x2="50" y2="100" stroke-width="0.5" stroke-dasharray="1 1"/>
+                    </svg>
+                </div>
+
+                <!-- Navigation Links around the Gear -->
+                <!-- Angles matching sketch layout -->
+                <div class="nav-item" style="--angle: -54deg;">
+                    <a href="#" class="nav-link" data-target="view-about">About</a>
+                </div>
+                <div class="nav-item" style="--angle: 18deg;">
+                    <a href="#" class="nav-link" data-target="view-skills">Skills</a>
+                </div>
+                <div class="nav-item" style="--angle: 90deg;">
+                    <a href="#" class="nav-link" data-target="view-projects">Projects</a>
+                </div>
+                <div class="nav-item" style="--angle: 162deg;">
+                    <a href="#" class="nav-link" data-target="view-experience">Experience</a>
+                </div>
+                <div class="nav-item" style="--angle: 234deg;">
+                    <a href="#" class="nav-link" data-target="view-education">Education</a>
+                </div>
+            </div>
+            
+            <div class="mt-20 sm:mt-24 text-center">
+                <p class="text-sm font-bold border border-draft-ink inline-block px-4 py-2 bg-draft-bg shadow-[2px_2px_0px_#1e293b]">
+                    <i class="fas fa-mouse-pointer mr-2"></i>SELECT A MODULE TO INSPECT
+                </p>
+            </div>
+        </div>
+
+        <!-- ==================== ABOUT VIEW ==================== -->
+        <div id="view-about" class="view w-full max-w-4xl flex-col">
+            <div class="flex justify-between items-end border-b-2 border-draft-ink pb-2 mb-6">
+                <h2 class="text-2xl font-bold uppercase"><i class="fas fa-user-tie mr-3"></i>Module: About Me</h2>
+                <span class="text-xs uppercase font-bold px-2 border border-draft-ink">ID: SEC-01</span>
+            </div>
+            
+            <div class="spec-sheet mb-8 flex flex-col md:flex-row gap-8 items-start">
+                <div class="w-full md:w-1/3 flex justify-center">
+                    <div class="p-2 border-2 border-draft-ink bg-white shadow-[4px_4px_0px_#1e293b] transform -rotate-2">
+                        <img src="pic/dharsyan profile.jpeg" alt="Dharsyan Rao" class="w-full max-w-[200px] h-auto object-cover  hover:-0 transition-all duration-300">
+                    </div>
+                </div>
+                <div class="w-full md:w-2/3">
+                    <h3 class="text-xl font-bold mb-4 uppercase underline decoration-dashed underline-offset-4">Profile Summary</h3>
+                    <p class="mb-4 leading-relaxed text-sm sm:text-base">
+                        Hello, I am <strong class="bg-blue-100 px-1">Dharsyan Rao A/L Ramanaidu</strong>. I am a highly motivated Mechanical Engineering student with a deep-rooted passion for understanding how machines work and a drive to innovate within the engineering field.
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
+                        <div>
+                            <h4 class="font-bold border-b border-draft-ink mb-2">Core Interests</h4>
+                            <ul class="list-none space-y-2 text-sm">
+                                <li><i class="fas fa-robot w-6 text-center"></i> Robotics & Automation</li>
+                                <li><i class="fas fa-cogs w-6 text-center"></i> Mechanical Design</li>
+                                <li><i class="fas fa-leaf w-6 text-center"></i> Sustainable Engineering</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold border-b border-draft-ink mb-2">Objective</h4>
+                            <p class="text-sm">
+                                To bridge the gap between theoretical mechanical principles and practical, modern digital solutions, contributing to efficient designs and sustainable engineering practices.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="blueprint-btn self-start back-btn"><i class="fas fa-arrow-left"></i> Main Menu</button>
+        </div>
+
+        <!-- ==================== EDUCATION VIEW ==================== -->
+        <div id="view-education" class="view w-full max-w-3xl flex-col">
+            <div class="flex justify-between items-end border-b-2 border-draft-ink pb-2 mb-6">
+                <h2 class="text-2xl font-bold uppercase"><i class="fas fa-graduation-cap mr-3"></i>Module: Education</h2>
+                <span class="text-xs uppercase font-bold px-2 border border-draft-ink">ID: SEC-02</span>
+            </div>
+            
+            <div class="spec-sheet mb-8">
+                <!-- Degree -->
+                <div class="flex flex-col items-start border-b-2 border-draft-ink border-dashed pb-4 mb-6">
+                    <h3 class="text-xl font-bold uppercase">Universiti Tun Hussein Onn Malaysia (UTHM)</h3>
+                    <p class="text-lg mt-1 font-bold text-draft-accent">Bachelor's Degree in Mechanical Engineering with Honors</p>
+                </div>
+                
+                <!-- Diploma -->
+                <div class="flex flex-col items-start pb-4">
+                    <h3 class="text-xl font-bold uppercase">Politeknik Sultan Abdul Halim Mu'adzam Shah (POLIMAS)</h3>
+                    <p class="text-lg mt-1 font-bold text-draft-accent">Diploma in Digital Technology</p>
+                </div>
+            </div>
+            <button class="blueprint-btn self-start back-btn"><i class="fas fa-arrow-left"></i> Main Menu</button>
+        </div>
+
+        <!-- ==================== EXPERIENCE VIEW ==================== -->
+        <div id="view-experience" class="view w-full max-w-4xl flex-col">
+            <div class="flex justify-between items-end border-b-2 border-draft-ink pb-2 mb-6">
+                <h2 class="text-2xl font-bold uppercase"><i class="fas fa-briefcase mr-3"></i>Module: Experience</h2>
+                <span class="text-xs uppercase font-bold px-2 border border-draft-ink">ID: SEC-03</span>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- Exp 1 -->
+                <div class="spec-sheet !p-4 flex flex-col">
+                    <h3 class="font-bold uppercase border-b border-draft-ink pb-2 mb-3">Gieger (M) Sdn Bhd</h3>
+                    <p class="font-bold text-sm text-draft-accent mb-2">QC Inspector</p>
+                    <p class="text-xs mb-3 flex-grow">Conducted rigorous quality control inspections on automated machinery to ensure compliance with engineering standards.</p>
+                    <div class="text-[10px] uppercase border-t border-dashed border-draft-ink pt-2 mt-auto">
+                        <i class="fas fa-search mr-1"></i> Quality Control
+                    </div>
+                </div>
+
+                <!-- Exp 2 -->
+                <div class="spec-sheet !p-4 flex flex-col">
+                    <h3 class="font-bold uppercase border-b border-draft-ink pb-2 mb-3">Thong Guan Sdn Bhd</h3>
+                    <p class="font-bold text-sm text-draft-accent mb-2">Machine Technician</p>
+                    <p class="text-xs mb-3 flex-grow">Performed maintenance, troubleshooting, and repairs on industrial manufacturing machines to minimize downtime.</p>
+                    <div class="text-[10px] uppercase border-t border-dashed border-draft-ink pt-2 mt-auto">
+                        <i class="fas fa-wrench mr-1"></i> Maintenance
+                    </div>
+                </div>
+
+                <!-- Exp 3 -->
+                <div class="spec-sheet !p-4 flex flex-col">
+                    <h3 class="font-bold uppercase border-b border-draft-ink pb-2 mb-3">PPD</h3>
+                    <p class="font-bold text-sm text-draft-accent mb-2">IT Technician</p>
+                    <p class="text-xs mb-3 flex-grow">Repaired and fixed personal computers, managed hardware troubleshooting, and provided technical software support.</p>
+                    <div class="text-[10px] uppercase border-t border-dashed border-draft-ink pt-2 mt-auto">
+                        <i class="fas fa-desktop mr-1"></i> IT Support
+                    </div>
+                </div>
+            </div>
+            <button class="blueprint-btn self-start back-btn"><i class="fas fa-arrow-left"></i> Main Menu</button>
+        </div>
+
+        <!-- ==================== SKILLS VIEW ==================== -->
+        <div id="view-skills" class="view w-full max-w-4xl flex-col">
+            <div class="flex justify-between items-end border-b-2 border-draft-ink pb-2 mb-6">
+                <h2 class="text-2xl font-bold uppercase"><i class="fas fa-tools mr-3"></i>Module: Technical Skills</h2>
+                <span class="text-xs uppercase font-bold px-2 border border-draft-ink">ID: SEC-04</span>
+            </div>
+            
+            <div class="spec-sheet mb-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    
+                    <!-- Software -->
+                    <div>
+                        <h3 class="text-lg font-bold uppercase border-b border-draft-ink pb-1 mb-4 flex items-center">
+                            <i class="fas fa-laptop-code mr-2"></i> Digital & CAD
+                        </h3>
+                        <ul class="space-y-4">
+                            <li>
+                                <div class="flex justify-between font-bold text-sm mb-1">
+                                    <span>SolidWorks & AutoCAD</span>
+                                </div>
+                                <div class="w-full bg-gray-200 h-2 mb-1 border border-draft-ink"><div class="bg-draft-ink h-full" style="width: 85%"></div></div>
+                                <p class="text-[10px] text-gray-700 uppercase">3D Modeling / GD&T / Tech Drawings</p>
+                            </li>
+                            <li>
+                                <div class="flex justify-between font-bold text-sm mb-1">
+                                    <span>Python Programming</span>
+                                </div>
+                                <div class="w-full bg-gray-200 h-2 mb-1 border border-draft-ink"><div class="bg-draft-ink h-full" style="width: 75%"></div></div>
+                                <p class="text-[10px] text-gray-700 uppercase">Simulations / Logic</p>
+                            </li>
+                            <li>
+                                <div class="flex justify-between font-bold text-sm mb-1">
+                                    <span>IT Troubleshooting</span>
+                                </div>
+                                <div class="w-full bg-gray-200 h-2 mb-1 border border-draft-ink"><div class="bg-draft-ink h-full" style="width: 90%"></div></div>
+                                <p class="text-[10px] text-gray-700 uppercase">Hardware Repair / Software Support</p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Hardware / Mechanical -->
+                    <div>
+                        <h3 class="text-lg font-bold uppercase border-b border-draft-ink pb-1 mb-4 flex items-center">
+                            <i class="fas fa-cogs mr-2"></i> Mechanical & Industrial
+                        </h3>
+                        <ul class="space-y-4">
+                            <li>
+                                <div class="flex justify-between font-bold text-sm mb-1">
+                                    <span>Machine Maintenance</span>
+                                </div>
+                                <div class="w-full bg-gray-200 h-2 mb-1 border border-draft-ink"><div class="bg-draft-ink h-full" style="width: 80%"></div></div>
+                                <p class="text-[10px] text-gray-700 uppercase">Diagnostics / Repair</p>
+                            </li>
+                            <li>
+                                <div class="flex justify-between font-bold text-sm mb-1">
+                                    <span>Welding</span>
+                                </div>
+                                <div class="w-full bg-gray-200 h-2 mb-1 border border-draft-ink"><div class="bg-draft-ink h-full" style="width: 70%"></div></div>
+                                <p class="text-[10px] text-gray-700 uppercase">Metal Fabrication / Joining</p>
+                            </li>
+                            <li>
+                                <div class="flex justify-between font-bold text-sm mb-1">
+                                    <span>Quality Control (QC)</span>
+                                </div>
+                                <div class="w-full bg-gray-200 h-2 mb-1 border border-draft-ink"><div class="bg-draft-ink h-full" style="width: 85%"></div></div>
+                                <p class="text-[10px] text-gray-700 uppercase">Inspection / Standards Compliance</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <button class="blueprint-btn self-start back-btn"><i class="fas fa-arrow-left"></i> Main Menu</button>
+        </div>
+
+        <!-- ==================== PROJECTS VIEW ==================== -->
+        <div id="view-projects" class="view w-full max-w-5xl flex-col">
+            <div class="flex justify-between items-end border-b-2 border-draft-ink pb-2 mb-6">
+                <h2 class="text-2xl font-bold uppercase"><i class="fas fa-project-diagram mr-3"></i>Module: Projects</h2>
+                <span class="text-xs uppercase font-bold px-2 border border-draft-ink">ID: SEC-05</span>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 overflow-y-auto max-h-[70vh] pr-2 pb-10">
+                
+                <!-- Project 1 -->
+                <div class="spec-sheet !p-4 flex flex-col">
+                    <div class="border border-draft-ink inline-block px-2 py-1 text-[10px] font-bold mb-3 uppercase bg-white self-start">Innovation</div>
+                    <h3 class="font-bold text-lg leading-tight uppercase mb-2">ENGINEER & MARVEX Ideas</h3>
+                    <p class="text-sm mb-4 flex-grow">Generated an innovative concept for a highly efficient cooling panel designed for modern buildings to optimize thermal regulation.</p>
+                    <div class="mt-2 border-2 border-draft-ink border-dashed p-1 bg-white">
+                        <img src="pic/1.jpeg" alt="Marvex Certificate" class="w-full h-40 object-cover hover:object-contain bg-gray-100 transition-all cursor-pointer">
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="spec-sheet !p-4 flex flex-col">
+                    <div class="border border-draft-ink inline-block px-2 py-1 text-[10px] font-bold mb-3 uppercase bg-white self-start">Robotics</div>
+                    <h3 class="font-bold text-lg leading-tight uppercase mb-2">"Making your robot alive!"</h3>
+                    <p class="text-sm mb-4 flex-grow">A hands-on mobile robot application using ROS (Robot Operating System). Successfully created a system to control a mobile robot.</p>
+                    <div class="mt-2 border-2 border-draft-ink border-dashed p-1 bg-white">
+                        <img src="pic/2.jpeg" alt="ROS Group" class="w-full h-40 object-cover hover:object-contain bg-gray-100 transition-all cursor-pointer">
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="spec-sheet !p-4 flex flex-col">
+                    <div class="border border-draft-ink inline-block px-2 py-1 text-[10px] font-bold mb-3 uppercase bg-white self-start">Design / CAD</div>
+                    <h3 class="font-bold text-lg leading-tight uppercase mb-2">Door Lock Drafting</h3>
+                    <p class="text-sm mb-4 flex-grow">Designed a complete and precise mechanical door lock system utilizing AutoCAD, complete with multi-view orthographic and isometric projections.</p>
+                    <div class="mt-2 border-2 border-draft-ink border-dashed p-1 bg-white">
+                        <img src="pic/3.jpeg" alt="AutoCAD Door Lock" class="w-full h-40 object-cover hover:object-contain bg-gray-100 transition-all cursor-pointer">
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="spec-sheet !p-4 flex flex-col">
+                    <div class="border border-draft-ink inline-block px-2 py-1 text-[10px] font-bold mb-3 uppercase bg-white self-start">Automation</div>
+                    <h3 class="font-bold text-lg leading-tight uppercase mb-2">Robotic Arm System (China)</h3>
+                    <p class="text-sm mb-4">Designed and implemented a successful robotic arm operational system in China, focusing on programming logic and mechanical calibration.</p>
+                    <div class="grid grid-cols-2 gap-2 mt-auto">
+                        <div class="border-2 border-draft-ink border-dashed p-1 bg-white">
+                            <img src="pic/4.jpeg" alt="Robotic Arm Logic" class="w-full h-32 object-cover hover:object-contain bg-gray-100 transition-all cursor-pointer">
+                        </div>
+                        <div class="border-2 border-draft-ink border-dashed p-1 bg-white">
+                            <img src="pic/5.jpeg" alt="Robotic Arm Lab" class="w-full h-32 object-cover hover:object-contain bg-gray-100 transition-all cursor-pointer">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <button class="blueprint-btn self-start back-btn"><i class="fas fa-arrow-left"></i> Main Menu</button>
+        </div>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set current date in header
+            const dateObj = new Date();
+            const dateStr = dateObj.getFullYear() + '-' + String(dateObj.getMonth() + 1).padStart(2, '0') + '-' + String(dateObj.getDate()).padStart(2, '0');
+            document.getElementById('current-date').textContent = dateStr;
+
+            // DOM Elements
+            const views = document.querySelectorAll('.view');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const backBtns = document.querySelectorAll('.back-btn');
+            const gear = document.getElementById('gear-svg');
+            
+            let rotationAngle = 0;
+
+            // Function to handle view switching
+            function showView(targetId) {
+                // Fade out current active views
+                views.forEach(view => {
+                    if (view.classList.contains('active')) {
+                        view.style.opacity = '0';
+                        view.style.transform = 'translateY(10px)';
+                        
+                        setTimeout(() => {
+                            view.classList.remove('active');
+                            // Prepare target view
+                            const target = document.getElementById(targetId);
+                            target.classList.add('active');
+                            // Small timeout to allow display:flex to apply before animating opacity
+                            setTimeout(() => {
+                                target.style.opacity = '1';
+                                target.style.transform = 'translateY(0)';
+                            }, 50);
+                        }, 400); // Matches CSS transition duration
+                    }
+                });
+            }
+
+            // Gear Interaction and Navigation
+            navLinks.forEach(link => {
+                link.addEventListener('mouseenter', () => {
+                    rotationAngle += 45;
+                    gear.style.transform = `rotate(${rotationAngle}deg)`;
+                });
+
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // Extra spin on click
+                    rotationAngle += 180;
+                    gear.style.transform = `rotate(${rotationAngle}deg) scale(0.9)`;
+                    setTimeout(() => {
+                        gear.style.transform = `rotate(${rotationAngle}deg) scale(1)`;
+                    }, 300);
+
+                    const target = link.getAttribute('data-target');
+                    showView(target);
+                });
+            });
+
+            // Back button functionality
+            backBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    showView('view-home');
+                    // Reset gear rotation slightly for dynamic feel
+                    rotationAngle -= 90;
+                    gear.style.transform = `rotate(${rotationAngle}deg)`;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
