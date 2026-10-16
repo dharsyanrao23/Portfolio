@@ -99,22 +99,17 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            /* Use CSS variables for radius to adapt to mobile */
-            --radius: 140px; 
+            /* Adjusted for very small mobile screens to prevent overflow */
+            --radius: 115px; 
             transform: translate(-50%, -50%) rotate(var(--angle)) translate(var(--radius)) rotate(calc(-1 * var(--angle)));
             z-index: 10;
-        }
-
-        @media (min-width: 768px) {
-            .nav-item {
-                --radius: 200px;
-            }
         }
 
         .nav-link {
             display: inline-block;
             background: #f4f4ec;
-            padding: 0.5rem 1rem;
+            padding: 0.4rem 0.6rem;
+            font-size: 0.75rem;
             border: 1px dashed #1e293b;
             font-weight: bold;
             cursor: pointer;
@@ -122,6 +117,22 @@
             box-shadow: 2px 2px 0px rgba(30, 41, 59, 0.2);
             text-transform: uppercase;
             letter-spacing: 0.05em;
+        }
+
+        @media (min-width: 480px) {
+            .nav-item {
+                --radius: 140px;
+            }
+            .nav-link {
+                padding: 0.5rem 1rem;
+                font-size: 1rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .nav-item {
+                --radius: 200px;
+            }
         }
 
         .nav-link:hover {
@@ -165,7 +176,7 @@
             transition: all 0.2s;
             cursor: pointer;
             display: inline-flex;
-            items-center: center;
+            align-items: center; /* Fixed typo here */
             gap: 0.5rem;
         }
         
@@ -175,7 +186,7 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col pt-24 pb-10 px-6 sm:px-12">
+<body class="min-h-screen flex flex-col pt-24 pb-10 px-4 sm:px-12">
 
     <!-- Engineering Drawing Borders -->
     <div class="frame">
@@ -184,8 +195,8 @@
     <div class="title-line hidden sm:block"></div>
 
     <!-- Header Title (Fixed conceptually, but scrolls if needed) -->
-    <header class="fixed top-4 left-0 w-full z-40 px-8 sm:px-16 flex items-center h-16 pointer-events-none">
-        <h1 class="text-xl sm:text-3xl font-bold uppercase tracking-widest text-draft-ink bg-draft-bg px-2 border-x-2 border-draft-ink sm:border-none sm:bg-transparent inline-block">
+    <header class="fixed top-4 left-0 w-full z-40 px-6 sm:px-16 flex items-center h-16 pointer-events-none">
+        <h1 class="text-lg sm:text-3xl font-bold uppercase tracking-widest text-draft-ink bg-draft-bg px-2 border-x-2 border-draft-ink sm:border-none sm:bg-transparent inline-block">
             Dharsyan Rao's Portfolio
         </h1>
         <div class="hidden sm:block ml-auto text-xs border border-draft-ink px-2 py-1 bg-draft-bg">
@@ -249,8 +260,8 @@
                 </div>
             </div>
             
-            <div class="mt-20 sm:mt-24 text-center">
-                <p class="text-sm font-bold border border-draft-ink inline-block px-4 py-2 bg-draft-bg shadow-[2px_2px_0px_#1e293b]">
+            <div class="mt-20 sm:mt-24 text-center z-20">
+                <p class="text-xs sm:text-sm font-bold border border-draft-ink inline-block px-4 py-2 bg-draft-bg shadow-[2px_2px_0px_#1e293b]">
                     <i class="fas fa-mouse-pointer mr-2"></i>SELECT A MODULE TO INSPECT
                 </p>
             </div>
@@ -258,19 +269,19 @@
 
         <!-- ==================== ABOUT VIEW ==================== -->
         <div id="view-about" class="view w-full max-w-4xl flex-col">
-            <div class="flex justify-between items-end border-b-2 border-draft-ink pb-2 mb-6">
-                <h2 class="text-2xl font-bold uppercase"><i class="fas fa-user-tie mr-3"></i>Module: About Me</h2>
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end border-b-2 border-draft-ink pb-2 mb-6 gap-2">
+                <h2 class="text-xl sm:text-2xl font-bold uppercase"><i class="fas fa-user-tie mr-3"></i>Module: About Me</h2>
                 <span class="text-xs uppercase font-bold px-2 border border-draft-ink">ID: SEC-01</span>
             </div>
             
             <div class="spec-sheet mb-8 flex flex-col md:flex-row gap-8 items-start">
                 <div class="w-full md:w-1/3 flex justify-center">
                     <div class="p-2 border-2 border-draft-ink bg-white shadow-[4px_4px_0px_#1e293b] transform -rotate-2">
-                        <img src="dharsyan profile.jpeg" alt="Dharsyan Rao" class="w-full max-w-[200px] h-auto object-cover  hover:-0 transition-all duration-300">
+                        <img src="pic/dharsyan profile.jpeg" alt="Dharsyan Rao" class="w-full max-w-[200px] h-auto object-cover  hover:-0 transition-all duration-300">
                     </div>
                 </div>
                 <div class="w-full md:w-2/3">
-                    <h3 class="text-xl font-bold mb-4 uppercase underline decoration-dashed underline-offset-4">Profile Summary</h3>
+                    <h3 class="text-lg sm:text-xl font-bold mb-4 uppercase underline decoration-dashed underline-offset-4">Profile Summary</h3>
                     <p class="mb-4 leading-relaxed text-sm sm:text-base">
                         Hello, I am <strong class="bg-blue-100 px-1">Dharsyan Rao A/L Ramanaidu</strong>. I am a highly motivated Mechanical Engineering student with a deep-rooted passion for understanding how machines work and a drive to innovate within the engineering field.
                     </p>
@@ -297,22 +308,22 @@
 
         <!-- ==================== EDUCATION VIEW ==================== -->
         <div id="view-education" class="view w-full max-w-3xl flex-col">
-            <div class="flex justify-between items-end border-b-2 border-draft-ink pb-2 mb-6">
-                <h2 class="text-2xl font-bold uppercase"><i class="fas fa-graduation-cap mr-3"></i>Module: Education</h2>
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end border-b-2 border-draft-ink pb-2 mb-6 gap-2">
+                <h2 class="text-xl sm:text-2xl font-bold uppercase"><i class="fas fa-graduation-cap mr-3"></i>Module: Education</h2>
                 <span class="text-xs uppercase font-bold px-2 border border-draft-ink">ID: SEC-02</span>
             </div>
             
             <div class="spec-sheet mb-8">
                 <!-- Degree -->
                 <div class="flex flex-col items-start border-b-2 border-draft-ink border-dashed pb-4 mb-6">
-                    <h3 class="text-xl font-bold uppercase">Universiti Tun Hussein Onn Malaysia (UTHM)</h3>
-                    <p class="text-lg mt-1 font-bold text-draft-accent">Bachelor's Degree in Mechanical Engineering with Honors</p>
+                    <h3 class="text-lg sm:text-xl font-bold uppercase">Universiti Tun Hussein Onn Malaysia (UTHM)</h3>
+                    <p class="text-base sm:text-lg mt-1 font-bold text-draft-accent">Bachelor's Degree in Mechanical Engineering with Honors</p>
                 </div>
                 
                 <!-- Diploma -->
                 <div class="flex flex-col items-start pb-4">
-                    <h3 class="text-xl font-bold uppercase">Politeknik Sultan Abdul Halim Mu'adzam Shah (POLIMAS)</h3>
-                    <p class="text-lg mt-1 font-bold text-draft-accent">Diploma in Digital Technology</p>
+                    <h3 class="text-lg sm:text-xl font-bold uppercase">Politeknik Sultan Abdul Halim Mu'adzam Shah (POLIMAS)</h3>
+                    <p class="text-base sm:text-lg mt-1 font-bold text-draft-accent">Diploma in Digital Technology</p>
                 </div>
             </div>
             <button class="blueprint-btn self-start back-btn"><i class="fas fa-arrow-left"></i> Main Menu</button>
@@ -320,8 +331,8 @@
 
         <!-- ==================== EXPERIENCE VIEW ==================== -->
         <div id="view-experience" class="view w-full max-w-4xl flex-col">
-            <div class="flex justify-between items-end border-b-2 border-draft-ink pb-2 mb-6">
-                <h2 class="text-2xl font-bold uppercase"><i class="fas fa-briefcase mr-3"></i>Module: Experience</h2>
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end border-b-2 border-draft-ink pb-2 mb-6 gap-2">
+                <h2 class="text-xl sm:text-2xl font-bold uppercase"><i class="fas fa-briefcase mr-3"></i>Module: Experience</h2>
                 <span class="text-xs uppercase font-bold px-2 border border-draft-ink">ID: SEC-03</span>
             </div>
             
@@ -361,8 +372,8 @@
 
         <!-- ==================== SKILLS VIEW ==================== -->
         <div id="view-skills" class="view w-full max-w-4xl flex-col">
-            <div class="flex justify-between items-end border-b-2 border-draft-ink pb-2 mb-6">
-                <h2 class="text-2xl font-bold uppercase"><i class="fas fa-tools mr-3"></i>Module: Technical Skills</h2>
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end border-b-2 border-draft-ink pb-2 mb-6 gap-2">
+                <h2 class="text-xl sm:text-2xl font-bold uppercase"><i class="fas fa-tools mr-3"></i>Module: Technical Skills</h2>
                 <span class="text-xs uppercase font-bold px-2 border border-draft-ink">ID: SEC-04</span>
             </div>
             
@@ -371,7 +382,7 @@
                     
                     <!-- Software -->
                     <div>
-                        <h3 class="text-lg font-bold uppercase border-b border-draft-ink pb-1 mb-4 flex items-center">
+                        <h3 class="text-base sm:text-lg font-bold uppercase border-b border-draft-ink pb-1 mb-4 flex items-center">
                             <i class="fas fa-laptop-code mr-2"></i> Digital & CAD
                         </h3>
                         <ul class="space-y-4">
@@ -401,7 +412,7 @@
 
                     <!-- Hardware / Mechanical -->
                     <div>
-                        <h3 class="text-lg font-bold uppercase border-b border-draft-ink pb-1 mb-4 flex items-center">
+                        <h3 class="text-base sm:text-lg font-bold uppercase border-b border-draft-ink pb-1 mb-4 flex items-center">
                             <i class="fas fa-cogs mr-2"></i> Mechanical & Industrial
                         </h3>
                         <ul class="space-y-4">
@@ -435,8 +446,8 @@
 
         <!-- ==================== PROJECTS VIEW ==================== -->
         <div id="view-projects" class="view w-full max-w-5xl flex-col">
-            <div class="flex justify-between items-end border-b-2 border-draft-ink pb-2 mb-6">
-                <h2 class="text-2xl font-bold uppercase"><i class="fas fa-project-diagram mr-3"></i>Module: Projects</h2>
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end border-b-2 border-draft-ink pb-2 mb-6 gap-2">
+                <h2 class="text-xl sm:text-2xl font-bold uppercase"><i class="fas fa-project-diagram mr-3"></i>Module: Projects</h2>
                 <span class="text-xs uppercase font-bold px-2 border border-draft-ink">ID: SEC-05</span>
             </div>
             
@@ -445,44 +456,44 @@
                 <!-- Project 1 -->
                 <div class="spec-sheet !p-4 flex flex-col">
                     <div class="border border-draft-ink inline-block px-2 py-1 text-[10px] font-bold mb-3 uppercase bg-white self-start">Innovation</div>
-                    <h3 class="font-bold text-lg leading-tight uppercase mb-2">ENGINEER & MARVEX Ideas</h3>
+                    <h3 class="font-bold text-base sm:text-lg leading-tight uppercase mb-2">ENGINEER & MARVEX Ideas</h3>
                     <p class="text-sm mb-4 flex-grow">Generated an innovative concept for a highly efficient cooling panel designed for modern buildings to optimize thermal regulation.</p>
                     <div class="mt-2 border-2 border-draft-ink border-dashed p-1 bg-white">
-                        <img src="1.jpeg" alt="Marvex Certificate" class="w-full h-40 object-cover hover:object-contain bg-gray-100 transition-all cursor-pointer">
+                        <img src="pic/1.jpeg" alt="Marvex Certificate" class="w-full h-40 object-cover hover:object-contain bg-gray-100 transition-all cursor-pointer">
                     </div>
                 </div>
 
                 <!-- Project 2 -->
                 <div class="spec-sheet !p-4 flex flex-col">
                     <div class="border border-draft-ink inline-block px-2 py-1 text-[10px] font-bold mb-3 uppercase bg-white self-start">Robotics</div>
-                    <h3 class="font-bold text-lg leading-tight uppercase mb-2">"Making your robot alive!"</h3>
+                    <h3 class="font-bold text-base sm:text-lg leading-tight uppercase mb-2">"Making your robot alive!"</h3>
                     <p class="text-sm mb-4 flex-grow">A hands-on mobile robot application using ROS (Robot Operating System). Successfully created a system to control a mobile robot.</p>
                     <div class="mt-2 border-2 border-draft-ink border-dashed p-1 bg-white">
-                        <img src="2.jpeg" alt="ROS Group" class="w-full h-40 object-cover hover:object-contain bg-gray-100 transition-all cursor-pointer">
+                        <img src="pic/2.jpeg" alt="ROS Group" class="w-full h-40 object-cover hover:object-contain bg-gray-100 transition-all cursor-pointer">
                     </div>
                 </div>
 
                 <!-- Project 3 -->
                 <div class="spec-sheet !p-4 flex flex-col">
                     <div class="border border-draft-ink inline-block px-2 py-1 text-[10px] font-bold mb-3 uppercase bg-white self-start">Design / CAD</div>
-                    <h3 class="font-bold text-lg leading-tight uppercase mb-2">Door Lock Drafting</h3>
+                    <h3 class="font-bold text-base sm:text-lg leading-tight uppercase mb-2">Door Lock Drafting</h3>
                     <p class="text-sm mb-4 flex-grow">Designed a complete and precise mechanical door lock system utilizing AutoCAD, complete with multi-view orthographic and isometric projections.</p>
                     <div class="mt-2 border-2 border-draft-ink border-dashed p-1 bg-white">
-                        <img src="3.jpeg" alt="AutoCAD Door Lock" class="w-full h-40 object-cover hover:object-contain bg-gray-100 transition-all cursor-pointer">
+                        <img src="pic/3.jpeg" alt="AutoCAD Door Lock" class="w-full h-40 object-cover hover:object-contain bg-gray-100 transition-all cursor-pointer">
                     </div>
                 </div>
 
                 <!-- Project 4 -->
                 <div class="spec-sheet !p-4 flex flex-col">
                     <div class="border border-draft-ink inline-block px-2 py-1 text-[10px] font-bold mb-3 uppercase bg-white self-start">Automation</div>
-                    <h3 class="font-bold text-lg leading-tight uppercase mb-2">Robotic Arm System (China)</h3>
+                    <h3 class="font-bold text-base sm:text-lg leading-tight uppercase mb-2">Robotic Arm System (China)</h3>
                     <p class="text-sm mb-4">Designed and implemented a successful robotic arm operational system in China, focusing on programming logic and mechanical calibration.</p>
                     <div class="grid grid-cols-2 gap-2 mt-auto">
                         <div class="border-2 border-draft-ink border-dashed p-1 bg-white">
-                            <img src="4.jpeg" alt="Robotic Arm Logic" class="w-full h-32 object-cover hover:object-contain bg-gray-100 transition-all cursor-pointer">
+                            <img src="pic/4.jpeg" alt="Robotic Arm Logic" class="w-full h-32 object-cover hover:object-contain bg-gray-100 transition-all cursor-pointer">
                         </div>
                         <div class="border-2 border-draft-ink border-dashed p-1 bg-white">
-                            <img src="5.jpeg" alt="Robotic Arm Lab" class="w-full h-32 object-cover hover:object-contain bg-gray-100 transition-all cursor-pointer">
+                            <img src="pic/5.jpeg" alt="Robotic Arm Lab" class="w-full h-32 object-cover hover:object-contain bg-gray-100 transition-all cursor-pointer">
                         </div>
                     </div>
                 </div>
