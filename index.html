@@ -214,25 +214,29 @@
                 <!-- Center Gear SVG -->
                 <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <svg id="gear-svg" class="w-40 h-40 sm:w-56 sm:h-56 text-draft-ink opacity-80" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <!-- Outer Rim -->
+                    <!-- Main Outer Circle (Replaces Gear Teeth) -->
+                        <circle cx="50" cy="50" r="44" stroke-width="2"/>
+    
+                        <!-- Inner Drafting Rings -->
                         <circle cx="50" cy="50" r="35" stroke-dasharray="2 2"/>
-                        <!-- Inner Hub -->
                         <circle cx="50" cy="50" r="15" stroke-width="2"/>
                         <circle cx="50" cy="50" r="10" />
+    
                         <!-- Hub Center -->
                         <circle cx="50" cy="50" r="3" fill="currentColor"/>
-                        <!-- Spokes -->
-                        <line x1="50" y1="20" x2="50" y2="35" />
-                        <line x1="50" y1="65" x2="50" y2="80" />
-                        <line x1="20" y1="50" x2="35" y2="50" />
-                        <line x1="65" y1="50" x2="80" y2="50" />
-                        <line x1="28.7" y1="28.7" x2="39.4" y2="39.4" />
-                        <line x1="71.3" y1="71.3" x2="60.6" y2="60.6" />
-                        <line x1="28.7" y1="71.3" x2="39.4" y2="60.6" />
-                        <line x1="71.3" y1="28.7" x2="60.6" y2="39.4" />
-                        
-                        <!-- Teeth Path (Wireframe style) -->
-                        <path d="M44,14 L46,6 L54,6 L56,14 L64,16 L70,10 L76,15 L72,22 L78,29 L86,26 L89,33 L82,38 L84,46 L92,48 L92,56 L84,58 L82,66 L89,71 L86,78 L78,75 L72,82 L76,89 L70,94 L64,88 L56,90 L54,98 L46,98 L44,90 L36,88 L30,94 L24,89 L28,82 L22,75 L14,78 L11,71 L18,66 L16,58 L8,56 L8,48 L16,46 L18,38 L11,33 L14,26 L22,29 L28,22 L24,15 L30,10 L36,16 Z" stroke-width="2" stroke-linejoin="round"/>
+    
+                        <!-- Crosshairs / Spokes -->
+                        <line x1="50" y1="6" x2="50" y2="35" />
+                        <line x1="50" y1="65" x2="50" y2="94" />
+                        <line x1="6" y1="50" x2="35" y2="50" />
+                        <line x1="65" y1="50" x2="94" y2="50" />
+    
+                        <!-- Diagonal Spokes -->
+                        <line x1="18.9" y1="18.9" x2="39.4" y2="39.4" />
+                        <line x1="81.1" y1="81.1" x2="60.6" y2="60.6" />
+                        <line x1="18.9" y1="81.1" x2="39.4" y2="60.6" />
+                        <line x1="81.1" y1="18.9" x2="60.6" y2="39.4" />
+
                         <!-- Dimension Lines overlay -->
                         <line x1="0" y1="50" x2="10" y2="50" stroke-width="0.5" stroke-dasharray="1 1"/>
                         <line x1="90" y1="50" x2="100" y2="50" stroke-width="0.5" stroke-dasharray="1 1"/>
